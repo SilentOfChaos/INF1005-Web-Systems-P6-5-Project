@@ -1,0 +1,19 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 576px) {
+    .display-6 {
+        font-size: 1.75rem;
+    }
+}
