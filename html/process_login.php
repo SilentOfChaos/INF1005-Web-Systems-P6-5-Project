@@ -4,13 +4,13 @@ session_start();
 $errorMsg = '';
 $success = true;
 
-$email = trim((string) ($_POST['email'] ?? ''));
+$loginId = trim((string) ($_POST['email'] ?? ''));
 $password = (string) ($_POST['password'] ?? '');
 
-$_SESSION['old_login'] = ['email' => $email];
+$_SESSION['old_login'] = ['email' => $loginId];
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errorMsg = 'Please enter a valid email address.';
+if ($loginId === '') {
+    $errorMsg = 'Please enter your email address or username.';
     $success = false;
 }
 
@@ -40,34 +40,68 @@ $_SESSION['error'] = $errorMsg;
 header('Location: login.php');
 exit;
 
+function resolveDbConfigPath(): ?string
+{
+    $candidates = [
+        __DIR__ . '/../config/db.php',
+        dirname(__DIR__) . '/config/db.php',
+        '/var/www/config/db.php',
+    ];
+
+    foreach ($candidates as $path) {
+        if (is_file($path)) {
+            return $path;
+        }
+    }
+
+    return null;
+}
+
+function loadPdo(string &$errorMsg): ?PDO
+{
+    $dbPath = resolveDbConfigPath();
+    if ($dbPath === null) {
+        $errorMsg = 'Database configuration file not found on server.';
+        return null;
+    }
+
+    // Use require (not require_once) to avoid stale include-state across entry points.
+    require $dbPath;
+
+    if (!isset($pdo) || !($pdo instanceof PDO)) {
+        $errorMsg = 'Database connection not initialized.';
+        return null;
+    }
+
+    return $pdo;
+}
+
 function authenticateUser(): void
 {
-    global $firstName, $lastName, $email, $password, $username, $role, $errorMsg, $success;
+    global $firstName, $lastName, $email, $password, $username, $role, $errorMsg, $success, $loginId;
 
-    // Use Member 1's DB connection file
-    require_once '/var/www/config/db.php';
-    global $pdo;
+    $pdo = loadPdo($errorMsg);
+    if ($pdo === null) {
+        $success = false;
+        return;
+    }
 
     try {
-        $stmt = $pdo->prepare('SELECT first_name, last_name, username, email, password_hash, role FROM users WHERE email = ? LIMIT 1');
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare('SELECT first_name, last_name, username, email, password_hash, role FROM users WHERE email = ? OR username = ? LIMIT 1');
+        $stmt->execute([$loginId, $loginId]);
         $row = $stmt->fetch();
 
-        if ($row) {
-            $firstName = $row['first_name'];
-            $lastName = $row['last_name'];
-            $username = $row['username'];
-            $role = $row['role'];
-
-            // Verify the hashed password
-            if (!password_verify($password, $row['password_hash'])) {
-                $errorMsg = "Email not found or password doesn't match.";
-                $success = false;
-            }
-        } else {
-            $errorMsg = "Email not found or password doesn't match.";
+        if (!$row || !password_verify($password, $row['password_hash'])) {
+            $errorMsg = 'Login credentials are invalid.';
             $success = false;
+            return;
         }
+
+        $firstName = $row['first_name'];
+        $lastName = $row['last_name'];
+        $username = $row['username'];
+        $email = $row['email'];
+        $role = $row['role'];
     } catch (PDOException $e) {
         $errorMsg = 'Database error: ' . $e->getMessage();
         $success = false;

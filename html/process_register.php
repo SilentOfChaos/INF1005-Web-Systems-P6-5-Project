@@ -63,16 +63,53 @@ $_SESSION['error'] = $errorMsg;
 header('Location: signup.php');
 exit;
 
+function resolveDbConfigPath(): ?string
+{
+    $candidates = [
+        __DIR__ . '/../config/db.php',
+        dirname(__DIR__) . '/config/db.php',
+        '/var/www/config/db.php',
+    ];
+
+    foreach ($candidates as $path) {
+        if (is_file($path)) {
+            return $path;
+        }
+    }
+
+    return null;
+}
+
+function loadPdo(string &$errorMsg): ?PDO
+{
+    $dbPath = resolveDbConfigPath();
+    if ($dbPath === null) {
+        $errorMsg = 'Database configuration file not found on server.';
+        return null;
+    }
+
+    // Use require (not require_once) to avoid stale include-state across entry points.
+    require $dbPath;
+
+    if (!isset($pdo) || !($pdo instanceof PDO)) {
+        $errorMsg = 'Database connection not initialized.';
+        return null;
+    }
+
+    return $pdo;
+}
+
 function saveMemberToDB(): void
 {
     global $firstName, $lastName, $username, $email, $password, $errorMsg, $success;
 
-    // Use Member 1's DB connection file
-    require_once '/var/www/config/db.php';
-    global $pdo;
+    $pdo = loadPdo($errorMsg);
+    if ($pdo === null) {
+        $success = false;
+        return;
+    }
 
     try {
-        // Check if username or email already exists
         $checkStmt = $pdo->prepare('SELECT id FROM users WHERE email = ? OR username = ? LIMIT 1');
         $checkStmt->execute([$email, $username]);
 
@@ -82,14 +119,11 @@ function saveMemberToDB(): void
             return;
         }
 
-        // Hash the password securely
         $pwdHashed = password_hash($password, PASSWORD_BCRYPT);
         $role = 'user';
 
-        // Insert new user into the database
         $stmt = $pdo->prepare('INSERT INTO users (first_name, last_name, username, email, password_hash, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())');
         $stmt->execute([$firstName, $lastName, $username, $email, $pwdHashed, $role]);
-
     } catch (PDOException $e) {
         $errorMsg = 'Database error: ' . $e->getMessage();
         $success = false;

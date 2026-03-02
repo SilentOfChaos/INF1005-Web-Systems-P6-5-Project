@@ -50,26 +50,26 @@ $old = $_SESSION['old_login'] ?? ['email' => ''];
             </div>
         </div>
     </nav>
-
+␊
     <main class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm">
                     <div class="card-body p-4">
                         <h2 class="text-center mb-4">Welcome Back S^3 Member 👋</h2>
-
+␊
                         <?php if ($error !== ''): ?>
                             <div class="alert alert-danger" role="alert"><?= h($error) ?></div>
                         <?php endif; ?>
-
+␊
                         <?php if ($success !== ''): ?>
                             <div class="alert alert-success" role="alert"><?= h($success) ?></div>
                         <?php endif; ?>
-
+␊
                         <form id="loginForm" action="process_login.php" method="POST" novalidate>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?= h((string) $old['email']) ?>" placeholder="you@email.com" required>
+                                <label for="email" class="form-label">Email address or username</label>
+                                <input type="text" class="form-control" id="email" name="email" value="<?= h((string) $old['email']) ?>" placeholder="you@email.com or username" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -85,7 +85,6 @@ $old = $_SESSION['old_login'] ?? ['email' => ''];
             </div>
         </div>
     </main>
-
     <footer class="text-center py-4">
         <p class="mb-0">&copy; 2025 Singapore Singles Society. All rights reserved.</p>
     </footer>
