@@ -1,0 +1,289 @@
+/* Import modern font matching Figma */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+
+/* Global Styles */
+/*:root variables for consistent theming */
+:root {
+    --primary-pink: #FF4A7A;
+    --text-dark: #2A1A22;
+    --bg-light: #FFFFFF;
+    --card-gradient: linear-gradient(145deg, #7A004B 0%, #3B0045 100%);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Soft Glows */
+body::before {
+    content: '';
+    position: fixed;
+    bottom: -10%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,74,122,0.15) 0%, transparent 70%);
+    z-index: -1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 10%;
+    right: -5%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255,74,122,0.15) 0%, transparent 70%);
+    z-index: -1;
+}
+
+/* Custom Navbar matching Figma design */
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+}
+
+.brand-logo {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-pink);
+    text-decoration: none;
+    font-style: italic;
+}
+
+.nav-center {
+    display: flex;
+    gap: 1.5rem;
+    background: #FFF0F5;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    transition: background 0.2s;
+}
+
+/* Nav Hover Effects */
+.nav-center a:hover {
+    background: rgba(255, 74, 122, 0.15);
+    color: var(--primary-pink);
+}
+
+.nav-center a.active {
+    background: var(--primary-pink);
+    color: white;
+}
+
+.nav-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Button styles*/
+.btn-outline-custom {
+    text-decoration: none;
+    color: var(--primary-pink);
+    border: 2px solid var(--primary-pink);
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.btn-outline-custom:hover {
+    background: var(--primary-pink);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 74, 122, 0.2);
+}
+
+.btn-solid-custom {
+    text-decoration: none;
+    background: var(--primary-pink);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 74, 122, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-solid-custom:hover {
+    transform: translateY(-3px);
+    color: white;
+    background: #e63e6d;
+    box-shadow: 0 8px 25px rgba(255, 74, 122, 0.4);
+}
+
+
+/* Hero Section Layout */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-top: 4rem;
+    gap: 4rem;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.hero-text p {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    line-height: 1.4;
+}
+
+/* Stacked Profile Cards */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 500px;
+}
+
+.card-stack {
+    position: relative;
+    width: 320px;
+    height: 420px;
+}
+
+.profile-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card-back-2 {
+    background: #5A3286;
+    transform: rotate(10deg) translate(20px, 10px);
+    z-index: 1;
+}
+
+.card-back-1 {
+    background: #872A7A;
+    transform: rotate(5deg) translate(10px, 5px);
+    z-index: 2;
+}
+
+.card-front {
+    background: var(--card-gradient);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    color: white;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-front h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-front p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.card-front em {
+    font-style: normal;
+    opacity: 0.7;
+}
+
+/* Front Card Hover Effect */
+.card-stack:hover .card-front {
+    transform: rotate(0deg) translateY(-10px) translateX(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Footer Styles */
+.custom-footer {
+    background-color: #f6f0ff;
+    padding: 4rem 0 2rem;
+    margin-top: 5rem;
+    border-top: 1px solid rgba(255, 74, 122, 0.1);
+}
+
+.footer-heading {
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.footer-link {
+    display: block;
+    color: #666;
+    text-decoration: none;
+    margin-bottom: 0.8rem;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--primary-pink);
+}
+
+.footer-divider {
+    border-color: rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+@media (max-width: 992px) {
+    .hero-wrapper {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .hero-text { margin: 0 auto; }
+    .nav-center { display: none; }
+}
