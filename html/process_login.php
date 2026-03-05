@@ -25,6 +25,7 @@ if ($success) {
 
 if ($success) {
     unset($_SESSION['old_login']);
+    $_SESSION['user_id'] = $userId;
     $_SESSION['user_email'] = $email;
     $_SESSION['username'] = $username;
     $_SESSION['first_name'] = $firstName;
@@ -32,7 +33,7 @@ if ($success) {
     $_SESSION['role'] = $role;
     $_SESSION['success'] = 'You are now logged in.';
 
-    header('Location: index.php');
+    header('Location: profiles.php');
     exit;
 }
 
@@ -78,7 +79,7 @@ function loadPdo(string &$errorMsg): ?PDO
 
 function authenticateUser(): void
 {
-    global $firstName, $lastName, $email, $password, $username, $role, $errorMsg, $success, $loginId;
+    global $firstName, $lastName, $email, $password, $username, $role, $errorMsg, $success, $loginId, $userId;
 
     $pdo = loadPdo($errorMsg);
     if ($pdo === null) {
@@ -87,7 +88,7 @@ function authenticateUser(): void
     }
 
     try {
-        $stmt = $pdo->prepare('SELECT first_name, last_name, username, email, password_hash, role FROM users WHERE email = ? OR username = ? LIMIT 1');
+        $stmt = $pdo->prepare('SELECT id, first_name, last_name, username, email, password_hash, role FROM users WHERE email = ? OR username = ? LIMIT 1');
         $stmt->execute([$loginId, $loginId]);
         $row = $stmt->fetch();
 
@@ -102,6 +103,7 @@ function authenticateUser(): void
         $username = $row['username'];
         $email = $row['email'];
         $role = $row['role'];
+        $userId = $row['id'];
     } catch (PDOException $e) {
         $errorMsg = 'Database error: ' . $e->getMessage();
         $success = false;

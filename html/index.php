@@ -1,55 +1,14 @@
 <?php
 session_start();
 
-function h(string $value): string
-{
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
+$activePage = 'home';
+$pageTitle = 'Home';
+
+require_once 'includes/header.php';
 
 $success = $_SESSION['success'] ?? '';
 unset($_SESSION['success']);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Singapore Singles Society landing page">
-    <meta name="author" content="Singapore Singles Society— INF1005">
-    <title>Singapore Singles Society: S³</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-</head>
-<body>
-
-    <div class="container" aria-label="Main navigation">
-        <nav class="custom-navbar">
-            <a href="index.php" class="brand-logo" aria-label="Singapore Singles Society home">S³</a>
-            
-            <div class="nav-center">
-                <a href="index.php" class="active">Home</a>
-                <a href="about.php">About</a>
-                <a href="#">Pricing</a>
-            </div>
-
-            <div class="nav-right">
-                <?php if (isset($_SESSION['username'])): ?>
-                    <div class="dropdown">
-                        <a class="btn-solid-custom dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?= h($_SESSION['username']) ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
-                <?php else: ?>
-                    <a href="login.php" class="btn-outline-custom">Log In</a>
-                    <a href="signup.php" class="btn-solid-custom">Join Now &rarr;</a>
-                <?php endif; ?>
-            </div>
-        </nav>
-    </div>
 
 
     <main class="container d-flex flex-column" style="flex: 1;">
@@ -130,4 +89,3 @@ unset($_SESSION['success']);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
-</html>
