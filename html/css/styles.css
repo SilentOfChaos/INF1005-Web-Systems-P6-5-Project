@@ -1,8 +1,16 @@
-/* Import modern font matching Figma */
+/* ============================================================
+   SINGAPORE SINGLES SOCIETY (S³) - MAIN STYLESHEET
+   ============================================================ */
+
+/* Import modern geometric font matching the Figma design */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
-/* Global Styles */
-/*:root variables for consistent theming */
+/* ============================================================
+   1. GLOBAL VARIABLES & BASE STYLES
+   ============================================================ */
+
+/* :root contains our global color palette. 
+   Using variables (var(--name)) ensures consistent theming across all pages. */
 :root {
     --primary-pink: #FF4A7A;
     --text-dark: #2A1A22;
@@ -16,12 +24,13 @@ body {
     color: var(--text-dark);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+    flex-direction: column; /* Pushes the footer to the bottom naturally */
+    overflow-x: hidden;     /* Prevents horizontal scrolling issues */
     position: relative;
 }
 
-/* Background Soft Glows */
+/* ── Background Soft Glows ── */
+/* These pseudo-elements create the ambient pink gradients fixed to the corners of the viewport */
 body::before {
     content: '';
     position: fixed;
@@ -30,7 +39,7 @@ body::before {
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(255,74,122,0.15) 0%, transparent 70%);
-    z-index: -1;
+    z-index: -1; /* Keeps the glow behind all other content */
 }
 
 body::after {
@@ -44,7 +53,11 @@ body::after {
     z-index: -1;
 }
 
-/* Custom Navbar matching Figma design */
+/* ============================================================
+   2. COMMON COMPONENTS (Used across multiple pages)
+   ============================================================ */
+
+/* ── Navigation Bar ── */
 .custom-navbar {
     display: flex;
     justify-content: space-between;
@@ -60,6 +73,7 @@ body::after {
     font-style: italic;
 }
 
+/* The pill-shaped container for the center links */
 .nav-center {
     display: flex;
     gap: 1.5rem;
@@ -75,10 +89,9 @@ body::after {
     font-size: 0.9rem;
     padding: 0.4rem 1rem;
     border-radius: 30px;
-    transition: background 0.2s;
+    transition: background 0.2s; /* Smooth transition for the hover state */
 }
 
-/* Nav Hover Effects */
 .nav-center a:hover {
     background: rgba(255, 74, 122, 0.15);
     color: var(--primary-pink);
@@ -95,7 +108,8 @@ body::after {
     align-items: center;
 }
 
-/* Button styles*/
+/* ── Reusable Buttons ── */
+/* Hollow button (e.g., Log In) */
 .btn-outline-custom {
     text-decoration: none;
     color: var(--primary-pink);
@@ -112,6 +126,7 @@ body::after {
     box-shadow: 0 4px 15px rgba(255, 74, 122, 0.2);
 }
 
+/* Filled button (e.g., Join Now) */
 .btn-solid-custom {
     text-decoration: none;
     background: var(--primary-pink);
@@ -124,129 +139,13 @@ body::after {
 }
 
 .btn-solid-custom:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Slight lift effect */
     color: white;
     background: #e63e6d;
     box-shadow: 0 8px 25px rgba(255, 74, 122, 0.4);
 }
 
-
-/* Hero Section Layout */
-.hero-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    margin-top: 4rem;
-    gap: 4rem;
-}
-
-.hero-text {
-    flex: 1;
-    max-width: 500px;
-}
-
-.hero-text h1 {
-    font-size: 4.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--text-dark);
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
-}
-
-.hero-text p {
-    font-size: 1.3rem;
-    color: #555;
-    margin-bottom: 2.5rem;
-    line-height: 1.4;
-}
-
-/* Stacked Profile Cards */
-.hero-visual {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    height: 500px;
-}
-
-.card-stack {
-    position: relative;
-    width: 320px;
-    height: 420px;
-}
-
-.profile-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.card-back-2 {
-    background: #5A3286;
-    transform: rotate(10deg) translate(20px, 10px);
-    z-index: 1;
-}
-
-.card-back-1 {
-    background: #872A7A;
-    transform: rotate(5deg) translate(10px, 5px);
-    z-index: 2;
-}
-
-.card-front {
-    background: var(--card-gradient);
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
-    color: white;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card-front h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.card-front p {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin: 0.5rem 0 1rem 0;
-}
-
-.card-front em {
-    font-style: normal;
-    opacity: 0.7;
-}
-
-/* Front Card Hover Effect */
-.card-stack:hover .card-front {
-    transform: rotate(0deg) translateY(-10px) translateX(-5px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-}
-
-.tags {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.tag {
-    background: rgba(255,255,255,0.2);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-/* Footer Styles */
+/* ── Footer ── */
 .custom-footer {
     background-color: #f6f0ff;
     padding: 4rem 0 2rem;
@@ -278,6 +177,130 @@ body::after {
     margin: 2rem 0;
 }
 
+/* ============================================================
+   3. HOME PAGE STYLES (index.php)
+   ============================================================ */
+
+/* ── Hero Layout ── */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-top: 4rem;
+    gap: 4rem;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.hero-text p {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    line-height: 1.4;
+}
+
+/* ── Stacked Profile Cards (Visual Graphic) ── */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 500px;
+}
+
+/* The container holding the absolute positioned cards */
+.card-stack {
+    position: relative;
+    width: 320px;
+    height: 420px;
+}
+
+.profile-card {
+    position: absolute; /* Allows cards to stack on top of each other */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Bottom card */
+.card-back-2 {
+    background: #5A3286;
+    transform: rotate(10deg) translate(20px, 10px);
+    z-index: 1;
+}
+
+/* Middle card */
+.card-back-1 {
+    background: #872A7A;
+    transform: rotate(5deg) translate(10px, 5px);
+    z-index: 2;
+}
+
+/* Top active card */
+.card-front {
+    background: var(--card-gradient);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes text to the bottom */
+    padding: 2rem;
+    color: white;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-front h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-front p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.card-front em {
+    font-style: normal;
+    opacity: 0.7;
+}
+
+/* Front Card Hover Effect (Lifts the card up slightly) */
+.card-stack:hover .card-front {
+    transform: rotate(0deg) translateY(-10px) translateX(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Mobile Responsiveness for the Hero Section */
 @media (max-width: 992px) {
     .hero-wrapper {
         flex-direction: column;
@@ -285,14 +308,14 @@ body::after {
         margin-top: 2rem;
     }
     .hero-text { margin: 0 auto; }
-    .nav-center { display: none; }
+    .nav-center { display: none; } /* Hides center links on small screens */
 }
 
 /* ============================================================
-   PROFILES / DISCOVER PAGE
+   4. PROFILES / DISCOVER PAGE (profiles.php)
    ============================================================ */
 
-/* Extra variables used only by the profiles page */
+/* Extra variables scoped only to the profiles page */
 :root {
     --text-light: #F5E6FF;
     --text-muted: #C4A8D4;
@@ -300,7 +323,7 @@ body::after {
     --no-color:   #ef4444;
 }
 
-/* Navbar wrapper for sticky frosted glass (profiles page) */
+/* Sticky frosted glass navbar */
 .navbar-wrapper {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(16px);
@@ -311,7 +334,6 @@ body::after {
     z-index: 200;
 }
 
-/* ── Discover page main layout ── */
 .discover-main {
     display: flex;
     flex-direction: column;
@@ -338,7 +360,7 @@ body::after {
     text-align: center;
 }
 
-/* ── Swipe Arena ── */
+/* ── Swipe Arena Layout ── */
 .swipe-arena {
     display: flex;
     align-items: center;
@@ -348,7 +370,7 @@ body::after {
     max-width: 1000px;
 }
 
-/* ── Arrow Buttons ── */
+/* Yes/No Swipe Buttons */
 .swipe-btn {
     width: 72px;
     height: 72px;
@@ -387,7 +409,7 @@ body::after {
     box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4);
 }
 
-/* ── Card Stack (scoped to swipe-arena to avoid hero conflicts) ── */
+/* ── Interactive Swiping Cards ── */
 .swipe-arena .card-stack {
     position: relative;
     width: 100%;
@@ -396,6 +418,7 @@ body::after {
     flex-shrink: 0;
 }
 
+/* Decorative background cards in the arena */
 .swipe-arena .card-stack::before,
 .swipe-arena .card-stack::after {
     content: '';
@@ -417,7 +440,6 @@ body::after {
     z-index: 1;
 }
 
-/* ── Swipeable Profile Card (scoped to swipe-arena) ── */
 .swipe-arena .profile-card {
     position: absolute;
     width: 100%; height: 100%;
@@ -509,7 +531,7 @@ body::after {
     overflow: hidden;
 }
 
-/* ── Swipe Feedback Labels ── */
+/* ── Swipe Action Feedback (LIKE / NOPE stamps) ── */
 .swipe-feedback {
     position: absolute;
     top: 2.5rem;
@@ -527,7 +549,7 @@ body::after {
 .feedback-yes { right: 1.5rem; color: var(--yes-color); border-color: var(--yes-color); }
 .feedback-no  { left:  1.5rem; color: var(--no-color);  border-color: var(--no-color);  }
 
-/* ── Swipe Animations ── */
+/* ── JavaScript Animation Keyframes ── */
 @keyframes slideOutRight {
     from { transform: translateX(0) rotate(0deg); opacity: 1; }
     to   { transform: translateX(120%) rotate(12deg); opacity: 0; }
@@ -545,7 +567,7 @@ body::after {
 .slide-out-left  { animation: slideOutLeft  0.4s ease-in  forwards; }
 .slide-in-up     { animation: slideInUp     0.4s ease-out forwards; }
 
-/* ── Counter / Dots ── */
+/* ── Pagination / Counter ── */
 .profile-counter {
     text-align: center;
     margin-top: 1.5rem;
@@ -569,7 +591,7 @@ body::after {
 }
 .counter-dot.active { background: var(--primary-pink); }
 
-/* ── Empty State ── */
+/* ── End of Queue (Empty State) ── */
 .empty-state { text-align: center; padding: 3rem; color: #8B4A6B; }
 .empty-icon  { font-size: 3.5rem; margin-bottom: 1rem; }
 .empty-state h3 {
@@ -579,12 +601,12 @@ body::after {
     margin-bottom: 0.5rem;
 }
 
-/* ── Match Toast ── */
+/* ── Match Success Notification Toast ── */
 .match-toast {
     position: fixed;
     bottom: 2rem;
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
+    transform: translateX(-50%) translateY(100px); /* Hidden off-screen initially */
     background: linear-gradient(135deg, var(--primary-pink), #FF7DAA);
     color: white;
     font-size: 1rem;
@@ -596,9 +618,9 @@ body::after {
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     white-space: nowrap;
 }
-.match-toast.show { transform: translateX(-50%) translateY(0); }
+.match-toast.show { transform: translateX(-50%) translateY(0); } /* Slides into view */
 
-/* ── Profiles page responsive ── */
+/* Mobile Responsiveness for Swipe Arena */
 @media (max-width: 768px) {
     .swipe-arena { gap: 1.2rem; }
     .swipe-btn { width: 58px; height: 58px; }
@@ -615,20 +637,21 @@ body::after {
 }
 
 /* ============================================================
-   EDIT-PROFILE PAGE
+   5. EDIT-PROFILE PAGE
    ============================================================ */
+
 .card-profile-preview {
     position: relative;
     height: 600px;
     width: 500px;
 }
 
-/* Front Card Hover Effect */
 .card-profile-preview:hover .card-front {
     transform: rotate(0deg) translateY(-10px) translateX(-5px);
     box-shadow: 0 30px 60px rgba(0,0,0,0.3);
 }
 
+/* Container for managing interest tags */
 .interests-input-container {
     display: flex;
     flex-wrap: wrap;
@@ -651,4 +674,73 @@ body::after {
     margin-left: 0.4rem;
     cursor: pointer;
     font-weight: bold;
+}
+
+/* ============================================================
+   6. ABOUT PAGE (about.php)
+   ============================================================ */
+
+.about-hero {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.about-hero h1 em {
+    color: var(--primary-pink);
+    font-style: normal;
+}
+
+.mission-section {
+    background: #FFF0F5;
+    border-radius: 24px;
+    padding: 4rem;
+    margin-bottom: 5rem;
+}
+
+/* The 3 pillar cards on the About page */
+.value-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    height: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 74, 122, 0.1);
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(255, 74, 122, 0.15);
+}
+
+.value-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-pink);
+    color: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--text-dark);
+    color: white;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
 }
