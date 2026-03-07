@@ -36,84 +36,86 @@ function navClass(string $page, string $active): string {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=<?= time(); ?>">
     <?= isset($extraHead) ? $extraHead : '' ?>
 </head>
 <body>
 
 <div class="navbar-wrapper">
     <div class="container" aria-label="Main navigation">
-        <nav class="custom-navbar">
+        
+        <nav class="custom-navbar navbar navbar-expand-lg">
 
-            <!-- Brand -->
-            <a href="index.php" class="brand-logo" aria-label="Singapore Singles Society home">S3</a>
+            <a href="index.php" class="brand-logo" aria-label="Singapore Singles Society home">S³</a>
 
-            <!-- Centre nav links -->
-            <div class="nav-center">
-                <a href="index.php"<?= navClass('home', $activePage) ?>>Home</a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <?php if ($loggedIn): ?>
-                    <!-- Logged-in only links -->
-                    <a href="profiles.php"<?= navClass('discover', $activePage) ?>>Discover</a>
-                    <a href="matches.php"<?= navClass('matches',  $activePage) ?>>Matches</a>
-                    <a href="messages.php"<?= navClass('messages', $activePage) ?>>Messages</a>
-                <?php endif; ?>
+            <div class="collapse navbar-collapse justify-content-end" id="mobileMenu">
+                
+                <div class="nav-center mx-lg-auto my-3 my-lg-0">
+                    <a href="index.php"<?= navClass('home', $activePage) ?>>Home</a>
 
-                <a href="about.php"<?= navClass('about', $activePage) ?>>About</a>
-                <a href="pricing.php"<?= navClass('pricing', $activePage) ?>>Pricing</a>
-            </div>
+                    <?php if ($loggedIn): ?>
+                        <a href="profiles.php"<?= navClass('discover', $activePage) ?>>Discover</a>
+                        <a href="matches.php"<?= navClass('matches',  $activePage) ?>>Matches</a>
+                        <a href="messages.php"<?= navClass('messages', $activePage) ?>>Messages</a>
+                    <?php endif; ?>
 
-            <!-- Right side -->
-            <div class="nav-right">
-                <?php if ($loggedIn): ?>
-                    <!-- Logged-in: profile button + dropdown -->
-                    <a href="edit-profile.php"
-                       class="btn-outline-custom<?= $activePage === 'profile' ? ' active' : '' ?>"
-                       aria-label="My profile">
-                        My Profile
-                    </a>
+                    <a href="about.php"<?= navClass('about', $activePage) ?>>About</a>
+                    <a href="pricing.php"<?= navClass('pricing', $activePage) ?>>Pricing</a>
+                </div>
 
-                    <div class="dropdown">
-                        <a class="btn-solid-custom dropdown-toggle"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false"
-                           aria-label="Account menu for <?= h($_SESSION['username'] ?? 'User') ?>">
-                            <?= h($_SESSION['username'] ?? 'User') ?>
+                <div class="nav-right">
+                    <?php if ($loggedIn): ?>
+                        <a href="edit-profile.php"
+                           class="btn-outline-custom<?= $activePage === 'profile' ? ' active' : '' ?> d-none d-lg-block"
+                           aria-label="My profile">
+                            My Profile
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" href="edit-profile.php">
-                                    <span aria-hidden="true">👤</span> My Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="matches.php">
-                                    <span aria-hidden="true">💛</span> My Matches
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="messages.php">
-                                    <span aria-hidden="true">💬</span> Messages
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="logout.php">
-                                    <span aria-hidden="true">🚪</span> Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
 
-                <?php else: ?>
-                    <!-- Logged-out: login + join -->
-                    <a href="login.php"  class="btn-outline-custom">Log In</a>
-                    <a href="signup.php" class="btn-solid-custom">Join Now &rarr;</a>
-                <?php endif; ?>
+                        <div class="dropdown w-100">
+                            <a class="btn-solid-custom dropdown-toggle d-block d-lg-inline-block text-center"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false"
+                               aria-label="Account menu for <?= h($_SESSION['username'] ?? 'User') ?>">
+                                <?= h($_SESSION['username'] ?? 'User') ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end mt-2 mobile-dropdown">
+                                <li>
+                                    <a class="dropdown-item" href="edit-profile.php">
+                                        <span aria-hidden="true">👤</span> My Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="matches.php">
+                                        <span aria-hidden="true">💛</span> My Matches
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="messages.php">
+                                        <span aria-hidden="true">💬</span> Messages
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="logout.php">
+                                        <span aria-hidden="true">🚪</span> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    <?php else: ?>
+                        <a href="login.php" class="btn-outline-custom text-center w-100 w-lg-auto mb-2 mb-lg-0">Log In</a>
+                        <a href="signup.php" class="btn-solid-custom text-center w-100 w-lg-auto">Join Now &rarr;</a>
+                    <?php endif; ?>
+                </div>
+
             </div>
-
         </nav>
     </div>
 </div>

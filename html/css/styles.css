@@ -2,13 +2,15 @@
    SINGAPORE SINGLES SOCIETY (S³) - MAIN STYLESHEET
    ============================================================ */
 
-/* Import modern font matching Figma */
+/* Import modern geometric font matching the Figma design */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
 /* ============================================================
-   GLOBAL / LANDING PAGE
+   1. GLOBAL VARIABLES & BASE STYLES
    ============================================================ */
 
+/* :root contains our global color palette. 
+   Using variables (var(--name)) ensures consistent theming across all pages. */
 :root {
     --primary-pink: #FF4A7A;
     --text-dark: #2A1A22;
@@ -22,12 +24,13 @@ body {
     color: var(--text-dark);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+    flex-direction: column; /* Pushes the footer to the bottom naturally */
+    overflow-x: hidden;     /* Prevents horizontal scrolling issues */
     position: relative;
 }
 
-/* Background Soft Glows */
+/* ── Background Soft Glows ── */
+/* These pseudo-elements create the ambient pink gradients fixed to the corners of the viewport */
 body::before {
     content: '';
     position: fixed;
@@ -36,7 +39,7 @@ body::before {
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(255,74,122,0.15) 0%, transparent 70%);
-    z-index: -1;
+    z-index: -1; /* Keeps the glow behind all other content */
 }
 
 body::after {
@@ -50,12 +53,16 @@ body::after {
     z-index: -1;
 }
 
-/* Custom Navbar matching Figma design */
+/* ============================================================
+   2. COMMON COMPONENTS (Used across multiple pages)
+   ============================================================ */
+
+/* ── Navigation Bar ── */
 .custom-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
 }
 
 .brand-logo {
@@ -66,6 +73,7 @@ body::after {
     font-style: italic;
 }
 
+/* The pill-shaped container for the center links */
 .nav-center {
     display: flex;
     gap: 1.5rem;
@@ -81,15 +89,15 @@ body::after {
     font-size: 0.9rem;
     padding: 0.4rem 1rem;
     border-radius: 30px;
-    transition: background 0.2s;
+    transition: background 0.2s; /* Smooth transition for the hover state */
 }
 
-/* Nav Hover Effects */
 .nav-center a:hover {
     background: rgba(255, 74, 122, 0.15);
     color: var(--primary-pink);
 }
 
+/* Active state for the page currently being viewed */
 .nav-center a.active {
     background: var(--primary-pink);
     color: white;
@@ -101,7 +109,8 @@ body::after {
     align-items: center;
 }
 
-/* Button styles */
+/* ── Reusable Buttons ── */
+/* Hollow button (e.g., Log In) */
 .btn-outline-custom {
     text-decoration: none;
     color: var(--primary-pink);
@@ -109,6 +118,7 @@ body::after {
     padding: 0.6rem 1.5rem;
     border-radius: 50px;
     font-weight: 700;
+    white-space: nowrap; /* Prevents text wrapping on smaller screens */
     transition: all 0.2s;
 }
 
@@ -118,6 +128,7 @@ body::after {
     box-shadow: 0 4px 15px rgba(255, 74, 122, 0.2);
 }
 
+/* Filled button (e.g., Join Now) */
 .btn-solid-custom {
     text-decoration: none;
     background: var(--primary-pink);
@@ -125,133 +136,19 @@ body::after {
     padding: 0.6rem 1.5rem;
     border-radius: 50px;
     font-weight: 700;
+    white-space: nowrap; /* Prevents text wrapping on smaller screens */
     box-shadow: 0 4px 15px rgba(255, 74, 122, 0.3);
     transition: all 0.3s ease;
 }
 
 .btn-solid-custom:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Slight lift effect */
     color: white;
     background: #e63e6d;
     box-shadow: 0 8px 25px rgba(255, 74, 122, 0.4);
 }
 
-/* Hero Section Layout */
-.hero-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    margin-top: 4rem;
-    gap: 4rem;
-}
-
-.hero-text {
-    flex: 1;
-    max-width: 500px;
-}
-
-.hero-text h1 {
-    font-size: 4.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--text-dark);
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
-}
-
-.hero-text p {
-    font-size: 1.3rem;
-    color: #555;
-    margin-bottom: 2.5rem;
-    line-height: 1.4;
-}
-
-/* Stacked Profile Cards */
-.hero-visual {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    height: 500px;
-}
-
-.card-stack {
-    position: relative;
-    width: 320px;
-    height: 420px;
-}
-
-.profile-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.card-back-2 {
-    background: #5A3286;
-    transform: rotate(10deg) translate(20px, 10px);
-    z-index: 1;
-}
-
-.card-back-1 {
-    background: #872A7A;
-    transform: rotate(5deg) translate(10px, 5px);
-    z-index: 2;
-}
-
-.card-front {
-    background: var(--card-gradient);
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
-    color: white;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card-front h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.card-front p {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin: 0.5rem 0 1rem 0;
-}
-
-.card-front em {
-    font-style: normal;
-    opacity: 0.7;
-}
-
-/* Front Card Hover Effect */
-.card-stack:hover .card-front {
-    transform: rotate(0deg) translateY(-10px) translateX(-5px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-}
-
-.tags {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.tag {
-    background: rgba(255,255,255,0.2);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-/* Footer Styles */
+/* ── Footer ── */
 .custom-footer {
     background-color: #f6f0ff;
     padding: 4rem 0 2rem;
@@ -283,22 +180,184 @@ body::after {
     margin: 2rem 0;
 }
 
+/* ── Mobile Responsiveness (Header & Navbar) ── */
 @media (max-width: 992px) {
     .hero-wrapper {
         flex-direction: column;
         text-align: center;
         margin-top: 2rem;
     }
-    .hero-text { margin: 0 auto; }
-    .nav-center { display: none; }
+    
+    .hero-text {
+        margin: 0 auto;
+    }
+    
+    /* Responsive Header Layout: Converts pill menu to a vertical list */
+    .nav-center {
+        flex-direction: column;
+        background: transparent;
+        padding: 0;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .nav-center a {
+        padding: 0.8rem;
+        border-radius: 12px;
+        background: rgba(255, 74, 122, 0.05);
+    }
+
+    .nav-center a.active {
+        background: var(--primary-pink);
+    }
+    
+    .nav-right {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.8rem;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 74, 122, 0.1);
+    }
+    
+    /* Removes the white box look from the Bootstrap dropdown on mobile */
+    .mobile-dropdown {
+        text-align: center;
+        border: none;
+        background: #FFF0F5;
+        border-radius: 16px;
+        box-shadow: none;
+    }
 }
 
-
 /* ============================================================
-   PROFILES / DISCOVER PAGE (profiles.php)
-   Scoped to .swipe-arena — cannot affect any other page.
+   3. HOME PAGE STYLES (index.php)
    ============================================================ */
 
+/* ── Hero Layout ── */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-top: 4rem;
+    gap: 4rem;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.hero-text p {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    line-height: 1.4;
+}
+
+/* ── Stacked Profile Cards (Visual Graphic) ── */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 500px;
+}
+
+/* The container holding the absolute positioned cards */
+.card-stack {
+    position: relative;
+    width: 320px;
+    height: 420px;
+}
+
+.profile-card {
+    position: absolute; /* Allows cards to stack on top of each other */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Bottom card in the graphic */
+.card-back-2 {
+    background: #5A3286;
+    transform: rotate(10deg) translate(20px, 10px);
+    z-index: 1;
+}
+
+/* Middle card in the graphic */
+.card-back-1 {
+    background: #872A7A;
+    transform: rotate(5deg) translate(10px, 5px);
+    z-index: 2;
+}
+
+/* Top active card in the graphic */
+.card-front {
+    background: var(--card-gradient);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes text to the bottom */
+    padding: 2rem;
+    color: white;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-front h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-front p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.card-front em {
+    font-style: normal;
+    opacity: 0.7;
+}
+
+/* Lifts the front card up slightly when hovered */
+.card-stack:hover .card-front {
+    transform: rotate(0deg) translateY(-10px) translateX(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ============================================================
+   4. PROFILES / DISCOVER PAGE (profiles.php)
+   ============================================================ */
+
+/* Extra variables scoped only to the profiles page */
 :root {
     --text-light: #F5E6FF;
     --text-muted: #C4A8D4;
@@ -306,6 +365,7 @@ body::after {
     --no-color:   #ef4444;
 }
 
+/* Sticky frosted glass navbar for the discover view */
 .navbar-wrapper {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(16px);
@@ -342,6 +402,7 @@ body::after {
     text-align: center;
 }
 
+/* ── Swipe Arena Layout ── */
 .swipe-arena {
     display: flex;
     align-items: center;
@@ -351,7 +412,7 @@ body::after {
     max-width: 1000px;
 }
 
-/* ── Swipe Buttons ── */
+/* Yes/No Swipe Buttons */
 .swipe-btn {
     width: 72px;
     height: 72px;
@@ -367,16 +428,37 @@ body::after {
     background: white;
 }
 
-.swipe-btn:focus-visible { outline: 3px solid var(--text-dark); outline-offset: 3px; }
-.swipe-btn svg { width: 36px; height: 36px; pointer-events: none; }
+.swipe-btn:focus-visible {
+    outline: 3px solid var(--text-dark);
+    outline-offset: 3px;
+}
 
-.swipe-btn-no  { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.25); }
-.swipe-btn-no:hover  { transform: scale(1.12) translateX(-3px); box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4); }
+.swipe-btn svg {
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+}
 
-.swipe-btn-yes { box-shadow: 0 4px 24px rgba(34, 197, 94, 0.25); }
-.swipe-btn-yes:hover { transform: scale(1.12) translateX(3px); box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4); }
+.swipe-btn-no {
+    box-shadow: 0 4px 24px rgba(239, 68, 68, 0.25);
+}
 
-/* ── Card Stack (scoped to avoid landing page conflicts) ── */
+.swipe-btn-no:hover {
+    transform: scale(1.12) translateX(-3px);
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4);
+}
+
+.swipe-btn-yes {
+    box-shadow: 0 4px 24px rgba(34, 197, 94, 0.25);
+}
+
+.swipe-btn-yes:hover {
+    transform: scale(1.12) translateX(3px);
+    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4);
+}
+
+/* ── Interactive Swiping Cards ── */
+/* The wrapper for the active swiping cards */
 .swipe-arena .card-stack {
     position: relative;
     width: 100%;
@@ -385,20 +467,25 @@ body::after {
     flex-shrink: 0;
 }
 
+/* Decorative background cards in the arena that sit behind the active profile */
 .swipe-arena .card-stack::before,
 .swipe-arena .card-stack::after {
     content: '';
     position: absolute;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 24px;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
 }
+
 .swipe-arena .card-stack::before {
     background: linear-gradient(145deg, #3D1150, #1A0535);
     transform: rotate(4deg) translateY(6px);
     opacity: 0.45;
     z-index: 0;
 }
+
 .swipe-arena .card-stack::after {
     background: linear-gradient(145deg, #5A1875, #2D0A2E);
     transform: rotate(2deg) translateY(3px);
@@ -406,9 +493,11 @@ body::after {
     z-index: 1;
 }
 
+/* The actual user profile card being swiped */
 .swipe-arena .profile-card {
     position: absolute;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 24px;
     background: linear-gradient(160deg, #4A1060 0%, #2D0A2E 40%, #160330 100%);
     box-shadow: 0 24px 64px rgba(45,10,46,0.45), 0 0 0 1px rgba(255,255,255,0.05);
@@ -422,7 +511,10 @@ body::after {
     transform: none;
     transition: none;
 }
-.swipe-arena .profile-card:active { cursor: grabbing; }
+
+.swipe-arena .profile-card:active {
+    cursor: grabbing;
+}
 
 .card-image {
     position: absolute;
@@ -435,15 +527,11 @@ body::after {
 /* Dark gradient overlay — ensures WCAG contrast for text over photos */
 .card-gradient {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 70%;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.82) 0%,
-        rgba(0,0,0,0.60) 30%,
-        rgba(0,0,0,0.20) 65%,
-        transparent 100%
-    );
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.60) 30%, rgba(0,0,0,0.20) 65%, transparent 100%);
     pointer-events: none;
 }
 
@@ -453,13 +541,48 @@ body::after {
     padding: 2rem;
 }
 
-.card-name  { font-size: 2rem;    font-weight: 800; color: #FFFFFF;                margin-bottom: 0.3rem; }
-.card-meta  { font-size: 0.88rem; color: rgba(255,255,255,0.85); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-.card-bio   { font-size: 0.88rem; color: rgba(255,255,255,0.80); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 0.3rem;
+}
 
-.card-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.6); display: inline-block; }
+.card-meta {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
 
-.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+.card-bio {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.80);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Truncates bio to 2 lines */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    display: inline-block;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+}
 
 .card-tag {
     background: rgba(255,255,255,0.15);
@@ -471,7 +594,7 @@ body::after {
     backdrop-filter: blur(4px);
 }
 
-/* ── Swipe Feedback Labels ── */
+/* ── Swipe Action Feedback (LIKE / NOPE stamps) ── */
 .swipe-feedback {
     position: absolute;
     top: 2.5rem;
@@ -485,56 +608,160 @@ body::after {
     transition: opacity 0.15s;
     border: 4px solid;
 }
-.feedback-yes { right: 1.5rem; color: var(--yes-color);  border-color: var(--yes-color); }
-.feedback-no  { left:  1.5rem; color: var(--no-color);   border-color: var(--no-color);  }
 
-/* ── Swipe Animations ── */
+.feedback-yes {
+    right: 1.5rem;
+    color: var(--yes-color);
+    border-color: var(--yes-color);
+}
+
+.feedback-no {
+    left: 1.5rem;
+    color: var(--no-color);
+    border-color: var(--no-color);
+}
+
+/* ── JavaScript Animation Keyframes for Swiping ── */
 @keyframes slideOutRight {
-    from { transform: translateX(0)    rotate(0deg);  opacity: 1; }
-    to   { transform: translateX(120%) rotate(12deg); opacity: 0; }
+    from {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(120%) rotate(12deg);
+        opacity: 0;
+    }
 }
+
 @keyframes slideOutLeft {
-    from { transform: translateX(0)     rotate(0deg);   opacity: 1; }
-    to   { transform: translateX(-120%) rotate(-12deg); opacity: 0; }
+    from {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-120%) rotate(-12deg);
+        opacity: 0;
+    }
 }
+
 @keyframes slideInUp {
-    from { transform: translateY(40px) scale(0.95); opacity: 0; }
-    to   { transform: translateY(0)    scale(1);    opacity: 1; }
+    from {
+        transform: translateY(40px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 }
 
-.slide-out-right { animation: slideOutRight 0.4s ease-in  forwards; }
-.slide-out-left  { animation: slideOutLeft  0.4s ease-in  forwards; }
-.slide-in-up     { animation: slideInUp     0.4s ease-out forwards; }
+.slide-out-right {
+    animation: slideOutRight 0.4s ease-in forwards;
+}
 
-/* ── Profile Counter ── */
-.profile-counter { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: #8B4A6B; font-weight: 500; }
-.counter-dots    { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.5rem; }
-.counter-dot     { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,74,122,0.25); transition: background 0.3s; }
-.counter-dot.active { background: var(--primary-pink); }
+.slide-out-left {
+    animation: slideOutLeft 0.4s ease-in forwards;
+}
 
-/* ── Empty State ── */
-.empty-state    { text-align: center; padding: 3rem; color: #8B4A6B; }
-.empty-icon     { font-size: 3.5rem; margin-bottom: 1rem; }
-.empty-state h3 { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.5rem; }
+.slide-in-up {
+    animation: slideInUp 0.4s ease-out forwards;
+}
 
-/* ── Discover page responsive ── */
+/* ── Pagination / Counter ── */
+.profile-counter {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #8B4A6B;
+    font-weight: 500;
+}
+
+.counter-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.counter-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,74,122,0.25);
+    transition: background 0.3s;
+}
+
+.counter-dot.active {
+    background: var(--primary-pink);
+}
+
+/* ── End of Queue (Empty State) ── */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #8B4A6B;
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* ── Discover Page Responsiveness ── */
 @media (max-width: 768px) {
-    .swipe-arena { gap: 1.2rem; }
-    .swipe-btn { width: 58px; height: 58px; }
-    .swipe-btn svg { width: 28px; height: 28px; }
-    .swipe-arena .card-stack { height: 500px; max-width: 360px; }
-    .card-name { font-size: 1.6rem; }
-}
-@media (max-width: 420px) {
-    .swipe-arena .card-stack { height: 450px; }
-    .swipe-btn { width: 48px; height: 48px; }
-    .swipe-btn svg { width: 22px; height: 22px; }
-    .swipe-arena { gap: 0.75rem; }
+    .swipe-arena {
+        gap: 1.2rem;
+    }
+    
+    .swipe-btn {
+        width: 58px;
+        height: 58px;
+    }
+    
+    .swipe-btn svg {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .swipe-arena .card-stack {
+        height: 500px;
+        max-width: 360px;
+    }
+    
+    .card-name {
+        font-size: 1.6rem;
+    }
 }
 
+@media (max-width: 420px) {
+    .swipe-arena .card-stack {
+        height: 450px;
+    }
+    
+    .swipe-btn {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .swipe-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .swipe-arena {
+        gap: 0.75rem;
+    }
+}
 
 /* ============================================================
-   MATCH POPUP
+   5. MATCH SUCCESS POPUP
    Used by both profiles.php and profile.php
    ============================================================ */
 
@@ -588,6 +815,7 @@ body::after {
     font-weight: 500;
 }
 
+/* The shrinking timer bar at the bottom of the popup */
 .match-popup-bar {
     height: 4px;
     background: #f0f0f0;
@@ -606,23 +834,39 @@ body::after {
 }
 
 @keyframes matchFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-@keyframes matchPopIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to   { opacity: 1; transform: scale(1);   }
-}
-@keyframes matchBarDrain {
-    from { transform: scaleX(1); }
-    to   { transform: scaleX(0); }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
+@keyframes matchPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes matchBarDrain {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
 
 /* ============================================================
-   PROFILE VIEW PAGE (profile.php)
+   6. DETAILED PROFILE VIEW PAGE (profile.php)
    ============================================================ */
 
+/* Wrapper for the detailed view */
 .vp-wrap {
     max-width: 480px;
     margin: 0 auto;
@@ -630,6 +874,7 @@ body::after {
     min-height: 100vh;
 }
 
+/* Main hero image section */
 .vp-hero {
     position: relative;
     height: 520px;
@@ -638,12 +883,14 @@ body::after {
 }
 
 .vp-hero-img {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center top;
     display: block;
 }
 
+/* Fallback if user has no image */
 .vp-hero-placeholder {
     position: absolute;
     inset: 0;
@@ -663,9 +910,12 @@ body::after {
     pointer-events: none;
 }
 
+/* Smooth fade from image into the white content area */
 .vp-hero-fade {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 140px;
     background: linear-gradient(to top, #fff 0%, transparent 100%);
     pointer-events: none;
@@ -673,46 +923,74 @@ body::after {
 
 .vp-back-btn {
     position: absolute;
-    top: 1rem; left: 1rem;
-    width: 40px; height: 40px;
+    top: 1rem;
+    left: 1rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: rgba(255,255,255,0.92);
     backdrop-filter: blur(8px);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--text-dark);
     box-shadow: 0 2px 12px rgba(0,0,0,0.18);
     z-index: 10;
     transition: transform 0.2s;
 }
-.vp-back-btn svg { width: 20px; height: 20px; }
-.vp-back-btn:hover { transform: scale(1.08); }
-.vp-back-btn:focus-visible { outline: 3px solid var(--primary-pink); outline-offset: 2px; }
+
+.vp-back-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.vp-back-btn:hover {
+    transform: scale(1.08);
+}
 
 .vp-hero-actions {
     position: absolute;
-    bottom: 1.5rem; right: 1.2rem;
-    display: flex; gap: 0.6rem;
+    bottom: 1.5rem;
+    right: 1.2rem;
+    display: flex;
+    gap: 0.6rem;
     z-index: 10;
 }
 
 .vp-action-btn {
-    width: 52px; height: 52px;
-    border-radius: 50%; border: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
     background: rgba(255,255,255,0.95);
     backdrop-filter: blur(8px);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.vp-action-btn svg { width: 22px; height: 22px; }
-.vp-action-btn:hover { transform: scale(1.1); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-.vp-action-btn:focus-visible { outline: 3px solid var(--primary-pink); outline-offset: 3px; }
 
-.vp-content { padding: 0.5rem 1.4rem 1.4rem; }
+.vp-action-btn svg {
+    width: 22px;
+    height: 22px;
+}
 
-.vp-identity { padding-top: 0.8rem; margin-bottom: 1.2rem; }
+.vp-action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.vp-content {
+    padding: 0.5rem 1.4rem 1.4rem;
+}
+
+.vp-identity {
+    padding-top: 0.8rem;
+    margin-bottom: 1.2rem;
+}
 
 .vp-name {
     font-size: 2rem;
@@ -721,7 +999,10 @@ body::after {
     line-height: 1.15;
     margin-bottom: 0.6rem;
 }
-.vp-age { color: var(--primary-pink); }
+
+.vp-age {
+    color: var(--primary-pink);
+}
 
 .vp-meta {
     display: flex;
@@ -730,6 +1011,7 @@ body::after {
     margin-bottom: 0.9rem;
 }
 
+/* Small informational pills (e.g. location, occupation) */
 .vp-meta-chip {
     display: inline-flex;
     align-items: center;
@@ -741,9 +1023,17 @@ body::after {
     font-weight: 600;
     color: #555;
 }
-.vp-meta-chip svg { flex-shrink: 0; color: #999; }
 
-.vp-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.vp-meta-chip svg {
+    flex-shrink: 0;
+    color: #999;
+}
+
+.vp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
 
 .vp-tag {
     background: #FFF0F5;
@@ -755,11 +1045,19 @@ body::after {
     border-radius: 50px;
 }
 
-.vp-divider { height: 1px; background: #f0f0f0; margin: 1.2rem 0; }
+.vp-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 1.2rem 0;
+}
 
-.vp-bio { font-size: 0.95rem; color: #444; line-height: 1.75; }
+.vp-bio {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.75;
+}
 
-/* ── Prompt Cards ── */
+/* ── Interactive Prompts ── */
 .vp-prompt-card {
     background: #FAFAFA;
     border: 1.5px solid #EFEFEF;
@@ -770,15 +1068,22 @@ body::after {
     transition: border-color 0.2s, box-shadow 0.2s;
     position: relative;
 }
-.vp-prompt-card:hover,
-.vp-prompt-card:focus-visible {
+
+.vp-prompt-card:hover {
     border-color: rgba(255,74,122,0.3);
     box-shadow: 0 4px 20px rgba(255,74,122,0.07);
-    outline: none;
 }
-.vp-prompt-card.is-open { background: #fff; border-color: rgba(255,74,122,0.35); }
 
-.vp-prompt-label { display: block; font-size: 1.1rem; margin-bottom: 0.4rem; }
+.vp-prompt-card.is-open {
+    background: #fff;
+    border-color: rgba(255,74,122,0.35);
+}
+
+.vp-prompt-label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+}
 
 .vp-prompt-q {
     font-size: 0.72rem;
@@ -797,11 +1102,19 @@ body::after {
     margin-bottom: 0.6rem;
 }
 
-.vp-tap-hint { font-size: 0.75rem; color: #ccc; font-weight: 600; transition: color 0.2s; }
-.vp-prompt-card:hover .vp-tap-hint,
-.vp-prompt-card.is-open .vp-tap-hint { color: var(--primary-pink); }
+.vp-tap-hint {
+    font-size: 0.75rem;
+    color: #ccc;
+    font-weight: 600;
+    transition: color 0.2s;
+}
 
-/* ── Reply Box ── */
+.vp-prompt-card:hover .vp-tap-hint,
+.vp-prompt-card.is-open .vp-tap-hint {
+    color: var(--primary-pink);
+}
+
+/* ── Reply Box (Expands when prompt is clicked) ── */
 .vp-reply-box {
     margin-top: 1rem;
     padding-top: 1rem;
@@ -810,8 +1123,14 @@ body::after {
 }
 
 @keyframes replyIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .vp-reply-textarea {
@@ -828,8 +1147,16 @@ body::after {
     transition: border-color 0.2s, background 0.2s;
     display: block;
 }
-.vp-reply-textarea:focus { border-color: var(--primary-pink); background: #fff; outline: none; }
-.vp-reply-textarea::placeholder { color: #c0c0c0; }
+
+.vp-reply-textarea:focus {
+    border-color: var(--primary-pink);
+    background: #fff;
+    outline: none;
+}
+
+.vp-reply-textarea::placeholder {
+    color: #c0c0c0;
+}
 
 .vp-reply-footer {
     display: flex;
@@ -838,7 +1165,11 @@ body::after {
     margin-top: 0.55rem;
 }
 
-.vp-chars { font-size: 0.72rem; color: #ccc; font-weight: 600; }
+.vp-chars {
+    font-size: 0.72rem;
+    color: #ccc;
+    font-weight: 600;
+}
 
 .vp-send-btn {
     background: var(--primary-pink);
@@ -848,12 +1179,14 @@ body::after {
     padding: 0.42rem 1.2rem;
     font-size: 0.85rem;
     font-weight: 700;
-    font-family: 'Plus Jakarta Sans', sans-serif;
     cursor: pointer;
     transition: background 0.2s, transform 0.15s;
 }
-.vp-send-btn:hover { background: #e63e6d; transform: translateY(-1px); }
-.vp-send-btn:focus-visible { outline: 3px solid var(--primary-pink); outline-offset: 2px; }
+
+.vp-send-btn:hover {
+    background: #e63e6d;
+    transform: translateY(-1px);
+}
 
 .vp-sent-msg {
     display: flex;
@@ -865,20 +1198,40 @@ body::after {
     padding: 0.5rem 0 0.2rem;
 }
 
-/* ── Extra Photos ── */
-.vp-photo-block { margin-bottom: 1rem; border-radius: 16px; overflow: hidden; }
-.vp-photo { width: 100%; height: 380px; object-fit: cover; display: block; border-radius: 16px; }
-
-/* ── Profile view responsive ── */
-@media (min-width: 480px) { .vp-wrap { box-shadow: 0 0 60px rgba(0,0,0,0.07); } }
-@media (max-width: 360px) {
-    .vp-hero { height: 420px; }
-    .vp-name { font-size: 1.7rem; }
+/* Extra Photos in Profile */
+.vp-photo-block {
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
+.vp-photo {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px;
+}
+
+/* ── Profile View Responsiveness ── */
+@media (min-width: 480px) {
+    .vp-wrap {
+        box-shadow: 0 0 60px rgba(0,0,0,0.07);
+    }
+}
+
+@media (max-width: 360px) {
+    .vp-hero {
+        height: 420px;
+    }
+    
+    .vp-name {
+        font-size: 1.7rem;
+    }
+}
 
 /* ============================================================
-   MATCHES PAGE (matches.php)
+   7. MATCHES PAGE (matches.php)
    ============================================================ */
 
 .matches-main {
@@ -916,7 +1269,7 @@ body::after {
     font-weight: 500;
 }
 
-/* ── Empty State ── */
+/* ── Matches Empty State ── */
 .matches-empty {
     display: flex;
     flex-direction: column;
@@ -927,7 +1280,10 @@ body::after {
     gap: 0.8rem;
 }
 
-.matches-empty-icon    { font-size: 3.5rem; margin-bottom: 0.5rem; }
+.matches-empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+}
 
 .matches-empty-heading {
     font-size: 1.4rem;
@@ -956,7 +1312,12 @@ body::after {
     box-shadow: 0 4px 15px rgba(255, 74, 122, 0.3);
     transition: background 0.2s, transform 0.2s;
 }
-.matches-cta:hover { background: #e63e6d; color: white; transform: translateY(-2px); }
+
+.matches-cta:hover {
+    background: #e63e6d;
+    color: white;
+    transform: translateY(-2px);
+}
 
 /* ── Match Cards Grid ── */
 .matches-grid {
@@ -977,17 +1338,21 @@ body::after {
     color: inherit;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
+
 .match-card:hover {
     border-color: rgba(255, 74, 122, 0.3);
     box-shadow: 0 6px 24px rgba(255, 74, 122, 0.09);
     transform: translateY(-2px);
 }
-.match-card:focus-visible { outline: 3px solid var(--primary-pink); outline-offset: 3px; }
 
-.match-card-photo { position: relative; flex-shrink: 0; }
+.match-card-photo {
+    position: relative;
+    flex-shrink: 0;
+}
 
 .match-card-img {
-    width: 68px; height: 68px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     object-fit: cover;
     display: block;
@@ -996,16 +1361,23 @@ body::after {
 
 .match-card-badge {
     position: absolute;
-    bottom: 0; right: -2px;
+    bottom: 0;
+    right: -2px;
     font-size: 0.95rem;
     background: white;
     border-radius: 50%;
-    width: 22px; height: 22px;
-    display: flex; align-items: center; justify-content: center;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 1px 4px rgba(0,0,0,0.12);
 }
 
-.match-card-info { flex: 1; min-width: 0; }
+.match-card-info {
+    flex: 1;
+    min-width: 0;
+}
 
 .match-card-name {
     font-size: 1rem;
@@ -1017,7 +1389,11 @@ body::after {
     text-overflow: ellipsis;
 }
 
-.match-card-age { color: var(--primary-pink); font-weight: 700; margin-left: 0.3rem; }
+.match-card-age {
+    color: var(--primary-pink);
+    font-weight: 700;
+    margin-left: 0.3rem;
+}
 
 .match-card-location {
     font-size: 0.78rem;
@@ -1029,16 +1405,24 @@ body::after {
     margin-bottom: 0.2rem;
 }
 
-.match-card-time { font-size: 0.72rem; color: #bbb; font-weight: 500; }
+.match-card-time {
+    font-size: 0.72rem;
+    color: #bbb;
+    font-weight: 500;
+}
 
-/* ── Matches page responsive ── */
 @media (max-width: 480px) {
-    .matches-grid { grid-template-columns: 1fr; }
-    .matches-main { padding: 1.5rem 1rem 2rem; }
+    .matches-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .matches-main {
+        padding: 1.5rem 1rem 2rem;
+    }
 }
 
 /* ============================================================
-   ABOUT PAGE (about.php)
+   8. ABOUT PAGE (about.php)
    ============================================================ */
 
 .about-hero {
